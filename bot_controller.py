@@ -10,7 +10,7 @@ import requests
 
 # ---------- КОНФИГ ----------
 BOT_TOKEN = "8317642788:AAGN-kicQxGutfF1QdwCn4a60hF13s_7vcM"
-ADMIN_ID = 123456789  # ваш Telegram ID
+ADMIN_ID = 1170852239  # ваш Telegram ID
 ENCRYPT_KEY = Fernet.generate_key()  # для защиты команд (передайте агенту)
 cipher = Fernet(ENCRYPT_KEY)
 
